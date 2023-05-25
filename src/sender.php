@@ -4,17 +4,12 @@ require_once 'config/FcmConfig.php';
 require_once 'config/AdmConfig.php';
 require_once 'config/HcmConfig.php';
 require_once 'config/MasConfig.php';
-require_once 'config/WebConfig.php';
 require_once 'config/ApnsConfig.php';
 require_once 'env.php';
 
 class Sender
 {
     private $sender;
-    
-    function __construct()
-    {
-    }
 
     private function initSender()
     {
@@ -30,9 +25,6 @@ class Sender
             case "mas":
                 $this->sender = new MasConfig();
                 break;
-            case "web":
-                $this->sender = new WebConfig();
-                break;
             case "apns":
                 $this->sender = new ApnsConfig();
                 break;
@@ -47,7 +39,7 @@ class Sender
     private function getMsg()
     {
         global $argv;
-        $json = file_get_contents(Env::getMsgPath());
+        $json = file_get_contents(__DIR__."/../".Env::getMsgPath());
         // Decode the JSON file
         return json_decode($json,true);
     }
@@ -55,10 +47,6 @@ class Sender
     private function schedulePush()
     {
         $this->printContent();
-        /**
-         * You can see the push content received by the device if you search inside log
-         * the following regex ^PUSH(_(adm|fcm|gcm))?$
-         */
         $this->sender->schedulePush();
         $this->printResult();
     }

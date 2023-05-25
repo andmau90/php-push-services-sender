@@ -8,12 +8,14 @@ class ApnsConfig extends BaseConfig {
 	private $topic = "";
 	private $certFilePass = "";
 	private $certFilePath = "";
+	private $params = array();
 
 	public function __construct()
     {
         $this->$topic = Env::apns()["TOPIC"];
         $this->$certFilePath = Env::apns()["CERT_PATH"];
 		$this->$certFilePass = Env::apns()["CERT_PASSWORD"];
+		$this->$params = Env::apns()["PARAMS"];
     }
 
 	protected function send($msg, $registrationIds)
@@ -25,8 +27,7 @@ class ApnsConfig extends BaseConfig {
 				"body" => $msg["notification"]["body"]
 			)
 		);
-		$payload->setUrlArgs(Env::apns()["PARAMS"]);
-
+		$payload->setUrlArgs($this->$params);
 		$apnsClient = new Client(true, $this->topic, $this->certFilePath, $this->certFilePass);
 		for($i = 0; $i < count($registrationIds); $i++){
 			$apnsClient->addNotification(new Notification($payload, $registrationIds[$i]));

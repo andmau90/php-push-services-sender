@@ -4,9 +4,15 @@ require_once 'BaseConfig.php';
 
 class MasConfig extends BaseConfig
 {
+    private $apiKey = "";
+    
+    public function __construct()
+    {
+        $this->apiKey = Env::mas()["API_KEY"];
+    }
+
     protected function send($msg, $registrationIds)
     {
-        $apiKey = Env::mas()["API_KEY"];
         if(isset($msg["data"])){
             $data = array_merge($msg["data"], $msg["notification"]);
         } else {
@@ -22,7 +28,7 @@ class MasConfig extends BaseConfig
         );
 
         $headers = array(
-            'Authorization: key=' . $apiKey,
+            'Authorization: key=' . $this->apiKey,
             'Content-Type: application/json'
         );
 

@@ -4,9 +4,15 @@ require_once 'BaseConfig.php';
 
 class FcmConfig extends BaseConfig
 {
+    private $apiKey = "";
+    
+    public function __construct()
+    {
+        $this->apiKey = Env::fcm()["API_KEY"];
+    }
+
     protected function send($msg, $registrationIds)
     {
-        $apiKey = Env::fcm()["API_KEY"];
         $fields = array_merge(
             array(
                 'registration_ids' => $registrationIds
@@ -15,7 +21,7 @@ class FcmConfig extends BaseConfig
         );
 
         $headers = array(
-            'Authorization: key=' . $apiKey,
+            'Authorization: key=' . $this->apiKey,
             'Content-Type: application/json'
         );
 

@@ -14,7 +14,7 @@ class Env{
     private static $env = NULL;
 
     public static function getMsgPath(){
-        return get_argv_param("--msg", __DIR__."/../msg.json");
+        return get_argv_param("--msg", "msg.json");
     }
 
     public static function getService(){
@@ -22,13 +22,13 @@ class Env{
     }
 
     private static function getEnvPath(){
-        return get_argv_param("--env", __DIR__."/../.env");
+        return get_argv_param("--env", ".env");
     }
 
     
     private static function getEnv(){
         if(!isset($env)){
-            $env = parse_ini_file(Env::getEnvPath(), true);
+            $env = parse_ini_file(__DIR__."/../".Env::getEnvPath(), true);
         }
         return $env;
     }
@@ -41,7 +41,7 @@ class Env{
     }
 
     public static function getIds(){
-        return Env::getModule("ids")["ID"];
+        return Env::getModule("tokens")["DEVICES"];
     }
 
     public static function fcm(){

@@ -55,8 +55,8 @@ class AdmConfig extends BaseConfig
         $fields =
             'grant_type=client_credentials&' .
             'scope=messaging:push&' .
-            'client_id=' . $this->amazonClientId . '&' .
-            'client_secret=' . $this->amazonClientSecret;
+            'client_id=' . Env::adm()["CLIENT_ID"] . '&' .
+            'client_secret=' . Env::adm()["CLIENT_SECRET"];
 
         $result = $this->curl('https://api.amazon.com/auth/O2/token', $headers, $fields);
         var_dump($result);
