@@ -1,0 +1,37 @@
+### huawei access token ##
+POST https://oauth-login.cloud.huawei.com/oauth2/v3/token?grant_type=client_credentials&client_id=813783748544840384&client_secret=42213160BC124BA01964EC300BFDA51FF68736E69F02EBECA8AACD87A7469ABD
+Content-Type: application/x-www-form-urlencoded
+
+### schedule push ##
+POST https://thesundailymys-mys-admin.newsmemory.com/eebrowser/bbe_prod/index.php?test=thesundailymys
+Content-Type: application/x-www-form-urlencoded
+
+{
+    "bbe_prod_request_controller":"PushNotificationsScheduler",
+    "bbe_prod_request_action":"createTrg",
+    "bbe_prod_version":"master",
+    "psetup":"thesundailymys",
+    "title":"New article",
+    "message":"open article by click on push",
+    "feed_id":"39_24d33953ed082c8b37a3ffd511cb05c8",
+    "force_silent_push":0,
+    "sublayouts":"*",
+    "services":"['hcm']",
+    "push_token":"23f637321527aad1c2fdc1debe5281b3"
+}
+
+### send web fcm ###
+POST https://fcm.googleapis.com/fcm/send
+Content-Type: application/json
+Authorization: key=AAAAbdD5Gd4:APA91bHa49qmzL-lf2icsW1YhmW6_j7rk2dHQHYMCT6ligQGQ9aho45MojIT2qNKha-4sNWR5XaUJoCqOvVqMc-5vcFyTGzNFJngBC2sVk7pwF7VJjR1uYMauxM6-4LxOg5wkdceHGse
+
+{
+    "registration_ids": [
+        "dJMaAQPHXy0qj0wrod1-uq:APA91bGYjLUWK1DirRS9GaGOYAO3Vj5pLFmu8gPQC-hr3764espkmGKcZ9e9YzZkOEpScF-OCmspTpEUOqBgEuU0Ozwt160I474ASM8POasFPoVwfR2pC266za0kgSUuc6ud3w4fzhpA"
+    ],
+    "data": {
+        "title": "An elderly woman is the island\\'s",
+        "body": "latest murder victim. She is 72-year-old Shirley Rogers of no fixed place of abode.",
+        "url": "https://www.staradvertiser.com/test-interstitial.html?google_preview=dWmxUX0AhcQYx4HBkwYwx532mgaIAYCAgOCYz5nQGA&iu=5136785&gdfp_req=1&lineItemId=5990496708&creativeId=138389585290"
+    }
+}
