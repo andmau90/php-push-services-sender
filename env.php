@@ -21,6 +21,10 @@ class Env{
         return get_argv_param("--env", __DIR__."/.env");
     }
 
+    public static function getService(){
+        return get_argv_param("--service", "fcm");
+    }
+
     
     private static function getEnv(){
         if(!isset($env)){

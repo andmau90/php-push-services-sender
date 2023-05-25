@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Configurator.php';
 require_once 'config/FcmConfig.php';
 require_once 'config/AdmConfig.php';
 require_once 'config/HcmConfig.php';
@@ -11,13 +10,10 @@ require_once 'env.php';
 
 class Sender
 {
-    private $command;
     private $sender;
-    private $ids;
-
-    function __construct($params)
+    
+    function __construct()
     {
-        $this->command = $params;
     }
 
     private function getMsg()
@@ -68,22 +64,22 @@ class Sender
 
     private function initSender()
     {
-        $service = Configurator::getService($this->command);
+        $service = Env::getService();
         switch ($service) {
-            case STR_HCM_SERVICE:
+            case "hcm":
                 $this->initHuaweiSender();
                 break;
-            case STR_ADM_SERVICE:
+            case "adm":
                 //provided by the app, you che see the value inside Log (search ADM)
                 $this->initAmazonSender();
                 break;
-            case STR_MAS_SERVICE:
+            case "mas":
                 $this->initMasSender();
                 break;
-            case STR_WEB_SERVICE:
+            case "web":
                 $this->initWebSender();
                 break;
-            case STR_APNS_SERVICE:
+            case "apns":
                 $this->initApnsSender();
                 break;
             default:
