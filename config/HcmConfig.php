@@ -1,6 +1,5 @@
 <?php
-include_once __DIR__.'/../utils/envreader.php';
-include_once 'BaseConfig.php';
+require_once 'BaseConfig.php';
 
 class HcmConfig extends BaseConfig
 {

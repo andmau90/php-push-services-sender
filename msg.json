@@ -1,0 +1,12 @@
+{
+    "notification": {
+        "title": "New article 2",
+        "body": "open article by click on push 2",
+        "sound": "default",
+        "badge": 1,
+        "android_channel_id": ""
+    },
+    "android": {
+        "priority": "high"
+    }
+}

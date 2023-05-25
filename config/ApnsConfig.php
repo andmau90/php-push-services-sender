@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__."/../utils/envreader.php";
 require_once __DIR__."/../apns/Client.php";
 require_once __DIR__."/../apns/Notification.php";
 require_once __DIR__."/../apns/Payload.php";
@@ -26,7 +25,7 @@ class ApnsConfig extends BaseConfig {
 				"body" => $msg["notification"]["body"]
 			)
 		);
-		$payload->setUrlArgs(explode(",", Env::apns()["PARAMS"]));
+		$payload->setUrlArgs(Env::apns()["PARAMS"]);
 
 		$apnsClient = new Client(true, $this->topic, $this->certFilePath, $this->certFilePass);
 		for($i = 0; $i < count($registrationIds); $i++){

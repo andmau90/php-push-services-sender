@@ -1,14 +1,13 @@
 <?php
 
-include 'IDS.php';
-include 'Msg.php';
-include 'Configurator.php';
-include 'config/FcmConfig.php';
-include 'config/AdmConfig.php';
-include 'config/HcmConfig.php';
-include 'config/MasConfig.php';
-include 'config/WebConfig.php';
-include 'config/ApnsConfig.php';
+require_once 'Configurator.php';
+require_once 'config/FcmConfig.php';
+require_once 'config/AdmConfig.php';
+require_once 'config/HcmConfig.php';
+require_once 'config/MasConfig.php';
+require_once 'config/WebConfig.php';
+require_once 'config/ApnsConfig.php';
+require_once 'env.php';
 
 class Sender
 {
@@ -19,23 +18,14 @@ class Sender
     function __construct($params)
     {
         $this->command = $params;
-        $this->ids = new IDS();
     }
 
-    private function getMsg($mMsgType)
+    private function getMsg()
     {
-        switch ($mMsgType) {
-            case 'category':
-                return Msg::$MSG_CATEGORY;
-            case 'feed':
-                return Msg::$MSG_FEED;
-            case 'source':
-                return Msg::$MSG_SOURCE;
-            case 'url':
-                return Msg::$MSG_URL;
-            default:
-                return Msg::$MSG_SIMPLE;
-        }
+        global $argv;
+        $json = file_get_contents(Env::getMsgPath());
+        // Decode the JSON file
+        return json_decode($json,true);
     }
 
     private function initAmazonSender()
@@ -100,8 +90,8 @@ class Sender
                 //provided by the app, you che see the value inside Log (search FCM)
                 $this->initFirebaseSender();
         }
-        $this->sender->setRegistrationIds($this->ids->getRegIds($service));
-        $this->sender->setMsg($this->getMsg(Configurator::getMsgType($this->command)));
+        $this->sender->setRegistrationIds(Env::getIds());
+        $this->sender->setMsg($this->getMsg());
     }
 
     private function schedulePush()

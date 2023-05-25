@@ -1,16 +1,24 @@
 <?php
 
+function get_argv_param($param, $df = NULL){
+    global $argv;
+        for ($i = 0; $i < count($argv); $i++) {
+            if (str_starts_with($argv[$i], $param)) {
+                return explode("=",$argv[$i])[1];;
+            }
+        }
+        return $df;
+} 
+
 class Env{
     private static $env = NULL;
 
+    public static function getMsgPath(){
+        return get_argv_param("--msg", __DIR__."/msg.json");
+    }
+
     private static function getEnvPath(){
-        global $argv;
-        for ($i = 0; $i < count($argv); $i++) {
-            if (str_starts_with($argv[$i], "--env")) {
-                return __DIR__."/../". explode("=",$argv[$i])[1];
-            }
-        }
-        return __DIR__."/../.env.local";
+        return get_argv_param("--env", __DIR__."/.env");
     }
 
     
@@ -26,6 +34,10 @@ class Env{
             return Env::getEnv()[$key];
         }
         return array();
+    }
+
+    public static function getIds(){
+        return Env::getModule("ids")["ID"];
     }
 
     public static function fcm(){
