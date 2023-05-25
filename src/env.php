@@ -14,15 +14,15 @@ class Env{
     private static $env = NULL;
 
     public static function getMsgPath(){
-        return get_argv_param("--msg", __DIR__."/msg.json");
-    }
-
-    private static function getEnvPath(){
-        return get_argv_param("--env", __DIR__."/.env");
+        return get_argv_param("--msg", __DIR__."/../msg.json");
     }
 
     public static function getService(){
         return get_argv_param("--service", "fcm");
+    }
+
+    private static function getEnvPath(){
+        return get_argv_param("--env", __DIR__."/../.env");
     }
 
     

@@ -16,78 +16,40 @@ class Sender
     {
     }
 
+    private function initSender()
+    {
+        $service = Env::getService();
+        switch ($service) {
+            case "hcm":
+                $this->sender = new HcmConfig();
+                break;
+            case "adm":
+                //provided by the app, you che see the value inside Log (search ADM)
+                $this->sender = new AdmConfig();
+                break;
+            case "mas":
+                $this->sender = new MasConfig();
+                break;
+            case "web":
+                $this->sender = new WebConfig();
+                break;
+            case "apns":
+                $this->sender = new ApnsConfig();
+                break;
+            default:
+                //provided by the app, you che see the value inside Log (search FCM)
+                 $this->sender = new FcmConfig();
+        }
+        $this->sender->setRegistrationIds(Env::getIds());
+        $this->sender->setMsg($this->getMsg());
+    }
+
     private function getMsg()
     {
         global $argv;
         $json = file_get_contents(Env::getMsgPath());
         // Decode the JSON file
         return json_decode($json,true);
-    }
-
-    private function initAmazonSender()
-    {
-        $this->sender = new AdmConfig();
-    }
-
-    private function initHuaweiSender()
-    {
-        $this->sender = new HcmConfig();
-    }
-
-    private function initFirebaseSender()
-    {
-        /*
-         * check if the app is registered in firebase console
-         */
-        $this->sender = new FcmConfig();
-    }
-
-    private function initMasSender()
-    {
-        /*
-         * check if the app is registered in firebase console
-         */
-        $this->sender = new MasConfig();
-    }
-
-    private function initWebSender()
-    {
-        /*
-         * check if the app is registered in firebase console
-         */
-        $this->sender = new WebConfig();
-    }
-
-    private function initApnsSender(){
-        $this->sender = new ApnsConfig();
-    }
-
-    private function initSender()
-    {
-        $service = Env::getService();
-        switch ($service) {
-            case "hcm":
-                $this->initHuaweiSender();
-                break;
-            case "adm":
-                //provided by the app, you che see the value inside Log (search ADM)
-                $this->initAmazonSender();
-                break;
-            case "mas":
-                $this->initMasSender();
-                break;
-            case "web":
-                $this->initWebSender();
-                break;
-            case "apns":
-                $this->initApnsSender();
-                break;
-            default:
-                //provided by the app, you che see the value inside Log (search FCM)
-                $this->initFirebaseSender();
-        }
-        $this->sender->setRegistrationIds(Env::getIds());
-        $this->sender->setMsg($this->getMsg());
     }
 
     private function schedulePush()
