@@ -2,12 +2,12 @@
 
 function get_argv_param($param, $df = NULL){
     global $argv;
-        for ($i = 0; $i < count($argv); $i++) {
-            if (str_starts_with($argv[$i], $param)) {
-                return explode("=",$argv[$i])[1];;
-            }
+    for ($i = 0; $i < count($argv); $i++) {
+        if (str_starts_with($argv[$i], $param)) {
+            return explode("=",$argv[$i])[1];;
         }
-        return $df;
+    }
+    return $df;
 } 
 
 class Env{
