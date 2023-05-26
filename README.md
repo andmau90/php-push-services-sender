@@ -32,7 +32,7 @@ DEVICES[]="VALUEn"
 ## Run
 
 ```
-php schedule.php --service=fcm|adm|hcm|mas|apns --env=FILE_NAME --msg=PATH_TO_JSON
+php index.php --service=fcm|adm|hcm|mas|apns --env=FILE_NAME --msg=PATH_TO_JSON
 ```
 
 if --env filename if it is not specified the script use `.env`
